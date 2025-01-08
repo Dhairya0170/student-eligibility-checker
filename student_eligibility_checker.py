@@ -27,11 +27,17 @@ names = students[:, 0]
 cgpa = students[:, 1].astype(float)
 assessment_scores = students[:, 2].astype(float)
 assessment_percentages = (assessment_scores / 50) * 100
+
+# Eligibility criteria: CGPA >= 5.0 and assessment percentage >= 75%
 eligibility = (cgpa >= 5.0) & (assessment_percentages >= 75)
 
-print("Eligibility Results for 20 Students:")
-print("-" * 60)
+# Selection criteria: eligible and assessment percentage >= 80% for interview
+interview_selection = eligibility & (assessment_percentages >= 80)
+
+print("Eligibility and Interview Selection Results for 20 Students:")
+print("-" * 80)
 for i, name in enumerate(names):
-    status = "Eligible" if eligibility[i] else "Not Eligible"
-    print(f"{name}: CGPA = {cgpa[i]:.1f}, Assessment = {assessment_percentages[i]:.2f}%, Status = {status}")
- 
+    eligibility_status = "Eligible" if eligibility[i] else "Not Eligible"
+    interview_status = "Selected for Interview" if interview_selection[i] else "Not Selected for Interview"
+    print(f"{name}: CGPA = {cgpa[i]:.1f}, Assessment = {assessment_percentages[i]:.2f}%, "
+          f"Eligibility = {eligibility_status}, Interview Status = {interview_status}")
